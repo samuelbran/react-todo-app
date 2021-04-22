@@ -5,6 +5,10 @@ interface Props {
   data: TodoInterface
 }
 
-const Todo: React.FC<Props> = ({ data }) => <li>{data.text}</li>
+const Todo: React.FC<Props> = ({ data }) => (
+  <li>
+    <span>{data.id}</span>. <span>{data.text}</span>
+  </li>
+)
 
 export default Todo

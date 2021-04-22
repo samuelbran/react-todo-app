@@ -30,10 +30,26 @@ it('Clears input after todo creation', () => {
   const todoText = 'Todo ejemplo'
 
   const { getByLabelText, getByText } = render(<App />)
-  const input = getByLabelText('Nuevo todo')
+  const input = getByLabelText('Nuevo todo') as HTMLInputElement
   fireEvent.change(input, { target: { value: todoText } })
 
   fireEvent.click(getByText('Agregar'))
 
   expect(input.value).toBe('')
+})
+
+it('Each todo has a different ID', () => {
+  const todoText = 'Tarea 1'
+  const todoText2 = 'Tarea 2'
+
+  const { getByLabelText, getByText } = render(<App />)
+  const input = getByLabelText('Nuevo todo')
+  fireEvent.change(input, { target: { value: todoText } })
+  fireEvent.click(getByText('Agregar'))
+
+  fireEvent.change(input, { target: { value: todoText2 } })
+  fireEvent.click(getByText('Agregar'))
+
+  getByText('1')
+  getByText('2')
 })

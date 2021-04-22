@@ -7,11 +7,13 @@ interface Props {
 }
 
 const TodoList: React.FC<Props> = ({ todos }) => (
-  <ol>
-    {todos.map((todo) => (
-      <Todo key={todo.idx} data={todo} />
-    ))}
-  </ol>
+  <ul style={{ listStyleType: 'none', padding: 0 }}>
+    {todos
+      .sort((a, b) => a?.id - b?.id)
+      .map((todo) => (
+        <Todo key={todo.id} data={todo} />
+      ))}
+  </ul>
 )
 
 export default TodoList

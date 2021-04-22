@@ -1,4 +1,4 @@
 export default interface Todo {
-  idx: number
+  id: number
   text: string
 }

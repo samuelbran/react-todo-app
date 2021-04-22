@@ -1,5 +1,4 @@
-import React from 'react'
-import { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import TodoInterface from './components/Todo.interface'
 
 import TodoList from './components/TodoList'
@@ -7,27 +6,27 @@ import Form from './components/Form'
 
 const App: React.FC = () => {
   const [todos, setTodos] = useState<TodoInterface[]>([])
-  const [todo, setTodo] = useState<TodoInterface>({ idx: 0, text: '' })
+  const [id, setId] = useState<number>(1)
+  const [todo, setTodo] = useState<TodoInterface>({ id, text: '' })
+
+  useEffect(() => {
+    if (todos.length > 0) {
+      setId((prev) => prev + 1)
+    }
+  }, [todos])
 
   const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (todo.text) {
       setTodos((prevTodos) => [todo, ...prevTodos])
-
-      setTodo({
-        idx: todos.length,
-        text: '',
-      })
+      setTodo({ id, text: '' })
     }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value: text } = e.target
+    const { value } = e.target
 
-    setTodo({
-      idx: todos.length | 0,
-      text,
-    })
+    setTodo({ id, text: value })
   }
 
   return (
