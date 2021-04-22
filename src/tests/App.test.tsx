@@ -2,6 +2,10 @@ import { render, fireEvent } from '@testing-library/react'
 
 import App from '../App'
 
+beforeEach(() => {
+  window.localStorage.clear()
+})
+
 it('Renders app correctly', () => {
   const { getByLabelText } = render(<App />)
   expect(getByLabelText('Nuevo todo')).not.toBeNull()

@@ -5,13 +5,22 @@ import TodoList from './components/TodoList'
 import Form from './components/Form'
 
 const App: React.FC = () => {
-  const [todos, setTodos] = useState<TodoInterface[]>([])
-  const [id, setId] = useState<number>(1)
+  const getPersistedTodos = () => {
+    const persistedTodos = window.localStorage.getItem('todos')
+    return persistedTodos ? JSON.parse(persistedTodos) : []
+  }
+  const persistedTodos = getPersistedTodos()
+
+  const [todos, setTodos] = useState<TodoInterface[]>(persistedTodos)
+  const [id, setId] = useState<number>(
+    persistedTodos.length > 0 ? persistedTodos.length : 1
+  )
   const [todo, setTodo] = useState<TodoInterface>({ id, text: '' })
 
   useEffect(() => {
     if (todos.length > 0) {
       setId((prev) => prev + 1)
+      window.localStorage.setItem('todos', JSON.stringify(todos))
     }
   }, [todos])
 
