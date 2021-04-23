@@ -2,20 +2,21 @@ import { render, fireEvent } from '@testing-library/react'
 
 import App from '../App'
 
+const labelText = 'Nuevo todo:'
 beforeEach(() => {
   window.localStorage.clear()
 })
 
 it('Renders app correctly', () => {
   const { getByLabelText } = render(<App />)
-  expect(getByLabelText('Nuevo todo')).not.toBeNull()
+  expect(getByLabelText(labelText)).not.toBeNull()
 })
 
 it('Adds a new todo', () => {
   const todoText = 'Todo ejemplo'
 
   const { getByLabelText, getByText } = render(<App />)
-  const input = getByLabelText('Nuevo todo')
+  const input = getByLabelText(labelText)
   fireEvent.change(input, { target: { value: todoText } })
   fireEvent.click(getByText('Agregar'))
 
@@ -34,7 +35,7 @@ it('Clears input after todo creation', () => {
   const todoText = 'Todo ejemplo'
 
   const { getByLabelText, getByText } = render(<App />)
-  const input = getByLabelText('Nuevo todo') as HTMLInputElement
+  const input = getByLabelText(labelText) as HTMLInputElement
   fireEvent.change(input, { target: { value: todoText } })
 
   fireEvent.click(getByText('Agregar'))
@@ -47,7 +48,7 @@ it('Each todo has a different ID', () => {
   const todoText2 = 'Tarea 2'
 
   const { getByLabelText, getByText } = render(<App />)
-  const input = getByLabelText('Nuevo todo')
+  const input = getByLabelText(labelText)
   fireEvent.change(input, { target: { value: todoText } })
   fireEvent.click(getByText('Agregar'))
 
@@ -56,4 +57,16 @@ it('Each todo has a different ID', () => {
 
   getByText('1')
   getByText('2')
+})
+
+it('Should mark todo as done', () => {
+  const todoText = 'Tarea 1'
+
+  const { getByLabelText, getByText } = render(<App />)
+  const input = getByLabelText(labelText)
+  fireEvent.change(input, { target: { value: todoText } })
+  fireEvent.click(getByText('Agregar'))
+
+  const checkbox = getByLabelText(todoText)
+  fireEvent.click(checkbox)
 })

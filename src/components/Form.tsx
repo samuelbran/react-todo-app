@@ -10,7 +10,7 @@ interface Props {
 const Form: React.FC<Props> = ({ todo, handleSubmit, handleChange }) => {
   return (
     <form onSubmit={handleSubmit}>
-      <label htmlFor="text">Nuevo todo</label>
+      <label htmlFor="text">Nuevo todo:</label>
       <input
         value={todo.text}
         onChange={handleChange}
