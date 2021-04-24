@@ -3,6 +3,7 @@ import TodoInterface from './components/Todo.interface'
 
 import TodoList from './components/TodoList'
 import Form from './components/Form'
+import Pokemon from './components/Pokemon'
 
 const App: React.FC = () => {
   const getPersistedTodos = () => {
@@ -58,6 +59,7 @@ const App: React.FC = () => {
         todo={todo}
       />
       <TodoList todos={todos} handleDone={handleDone} />
+      <Pokemon name="rayquaza" />
     </div>
   )
 }
